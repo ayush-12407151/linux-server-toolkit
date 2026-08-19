@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
+# shellcheck source=/dev/null
 source "$(dirname "$0")/../lib/common.sh"
 
 log "INFO" "Starting disk usage check"
 
-df -P | awk 'NR>1 {print $5, $6}' | sed 's/%//' | while read -r usage mount; do
+df -P | awk 'NR>1 {print $5, $6}' | sed 's/%//' | while IFS=' ' read -r usage mount; do
     if [[ "$usage" -ge "$DISK_CRIT_THRESHOLD" ]]; then
         log "ERROR" "CRITICAL: $mount is at ${usage}% (threshold: ${DISK_CRIT_THRESHOLD}%)"
         notify "CRITICAL: $mount is at ${usage}% disk usage"

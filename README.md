@@ -12,6 +12,27 @@ A collection of Bash scripts for common Linux server maintenance tasks: backups,
 
 ## Setup
 
+1. Clone the repo onto the target server.
+2. Copy the example config and edit it for your server:
+   ```
+   cp config/toolkit.conf.example config/toolkit.conf
+   $EDITOR config/toolkit.conf
+   ```
+   `config/toolkit.conf` is gitignored — it's never committed, so real paths, service names,
+   and (if used) your webhook URL stay local to the server.
+3. Confirm the scripts are executable (they're committed with the executable bit set, but
+   verify after cloning): `chmod +x bin/*.sh install.sh`
+4. Install the cron schedule: `./install.sh`. This installs all four scripts into your user
+   crontab (daily backup, daily log cleanup, service check every 15 min, disk check every
+   10 min). Re-running `install.sh` is safe — it replaces this project's entries rather than
+   duplicating them.
+5. `service_monitor.sh` restarts failed services via `sudo systemctl restart`. Since it runs
+   unattended from cron, the crontab's user needs **passwordless sudo** for `systemctl`
+   (e.g. a `NOPASSWD` sudoers entry scoped to `systemctl restart <service>` for the services
+   you're monitoring). Without it, restart attempts will hang/fail under cron.
+6. Do a dry run of each script before trusting the schedule: `./bin/backup.sh --dry-run`,
+   `./bin/log_cleanup.sh --dry-run`, `./bin/service_monitor.sh --dry-run`,
+   `./bin/disk_alert.sh` (read-only, no dry-run flag needed).
 
 ## Scripts
 - `backup.sh` — tar/gzip archive of configured source paths, integrity-verified, with retention-based rotation

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck source=/dev/null
 source "$(dirname "$0")/../lib/common.sh"
 
 DRY_RUN=false
@@ -43,4 +44,4 @@ for dir in "${LOG_CLEANUP_DIRS[@]}"; do
 done
 
 log "INFO" "Log cleanup complete"
-notify "Log cleanup completed for: ${LOG_CLEANUP_DIRS[*]}"
+notify "Log cleanup completed for: $(IFS=' '; echo "${LOG_CLEANUP_DIRS[*]}")"
