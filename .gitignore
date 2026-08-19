@@ -2,3 +2,4 @@ logs/*.log
 *.tar.gz
 config/toolkit.conf
 .env
+backups/
