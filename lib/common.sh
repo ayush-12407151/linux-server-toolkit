@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 IFS=$'\n\t'
+
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
 CONFIG_FILE="${CONFIG_FILE:-$PROJECT_ROOT/config/toolkit.conf}"
 if [[ -f "$CONFIG_FILE" ]]; then
     # shellcheck source=/dev/null
@@ -10,6 +12,7 @@ else
     echo "ERROR: config file not found at $CONFIG_FILE" >&2
     exit 1
 fi
+
 LOG_DIR="${LOG_DIR:-$PROJECT_ROOT/logs}"
 mkdir -p "$LOG_DIR"
 SCRIPT_NAME="$(basename "$0")"

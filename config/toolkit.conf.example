@@ -1,21 +1,15 @@
-# Copy this file to toolkit.conf and edit the values for your server.
-
-# --- backup.sh ---
-BACKUP_SOURCES="/etc /home"
+# Copy this file to toolkit.conf and edit for your server.
+BACKUP_SOURCES=("/etc" "/home")
 BACKUP_DIR="/opt/linux-server-toolkit/backups"
 RETENTION_DAYS=7
 
-# --- log_cleanup.sh ---
-LOG_CLEANUP_DIRS="/var/log"
+LOG_CLEANUP_DIRS=("/var/log")
 LOG_COMPRESS_DAYS=3
 LOG_DELETE_DAYS=30
 
-# --- service_monitor.sh ---
-SERVICES_TO_MONITOR="nginx sshd"
+SERVICES_TO_MONITOR=("nginx" "ssh")
 
-# --- disk_alert.sh ---
 DISK_WARN_THRESHOLD=80
 DISK_CRIT_THRESHOLD=90
 
-# --- notifications (used by all scripts) ---
 WEBHOOK_URL=""

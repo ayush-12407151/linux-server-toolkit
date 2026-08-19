@@ -14,13 +14,13 @@ TIMESTAMP="$(date '+%Y-%m-%d_%H%M%S')"
 ARCHIVE_NAME="backup-$TIMESTAMP.tar.gz"
 ARCHIVE_PATH="$BACKUP_DIR/$ARCHIVE_NAME"
 
-log "INFO" "Backing up: $BACKUP_SOURCES"
+log "INFO" "Backing up: ${BACKUP_SOURCES[*]}"
 log "INFO" "Destination: $ARCHIVE_PATH"
 
 if [[ "$DRY_RUN" == true ]]; then
-    log "INFO" "[DRY RUN] Would run: tar -czf $ARCHIVE_PATH $BACKUP_SOURCES"
+    log "INFO" "[DRY RUN] Would run: tar -czf $ARCHIVE_PATH ${BACKUP_SOURCES[*]}"
 else
-    if tar -czf "$ARCHIVE_PATH" $BACKUP_SOURCES; then
+    if tar -czf "$ARCHIVE_PATH" "${BACKUP_SOURCES[@]}"; then
         log "INFO" "Archive created: $ARCHIVE_PATH"
     else
         notify "Backup FAILED: could not create archive $ARCHIVE_NAME"
